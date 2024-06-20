@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+    }
+    .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: #333;
+        color: #fff;
+        padding: 10px 0;
+        text-align: center;
+        z-index: 1000;
+    }
+    .navbar a {
+        color: #fff;
+        padding: 14px 20px;
+        text-decoration: none;
+    }
+    .section {
+        padding: 60px 20px;
+        height: 100vh;
+    }
+    .intro-text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-size: 3em;
+        overflow: hidden;
+    }
+    .intro-text .left, .intro-text .right {
+        position: relative;
+        opacity: 0;
+        animation: slide-in 2s forwards;
+    }
+    .intro-text .left {
+        animation-delay: 0.5s;
+        animation-name: slide-in-left;
+    }
+    .intro-text .right {
+        animation-delay: 1s;
+        animation-name: slide-in-right;
+    }
+    @keyframes slide-in-left {
+        0% { left: -100%; opacity: 0; }
+        100% { left: 0; opacity: 1; }
+    }
+    @keyframes slide-in-right {
+        0% { right: -100%; opacity: 0; }
+        100% { right: 0; opacity: 1; }
+    }
+    .btn-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+    .btn {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        margin: 5px 0;
+        border-radius: 5px;
+    }
+    .btn:hover {
+        background-color: #555;
+    }
+    .slider {
+        width: 100%;
+        display: flex;
+        overflow: hidden;
+        position: relative;
+    }
+    .slides {
+        display: flex;
+        transition: transform 0.5s ease;
+        width: 500px;
+        height: 705px;
+    }
+    .slide {
+        min-width: 100%;
+        box-sizing: border-box;
+    }
+    .nav-buttons {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+    }
+    .nav-buttons button {
+        background-color: rgba(0, 0, 0, 0.5);
+        border: none;
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+    }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+<a href="#section1">소개</a>
+<a href="#section2">경험</a>
+<a href="#section3">스킬</a>
+<a href="#section4">연락처</a>
+</div>
+
+<div id="section1" class="section" style="background-color: lightcoral;">
+<h2>소개</h2>
+<div class="intro-text">
+    <div class="left">안녕하세요</div>
+    <div class="right"><br><h1>송민서입니다</h1></div>
+</div>
+</div>
+
+<div id="section2" class="section" style="background-color: lightblue;">
+<h2>경험</h2>
+<div class="slider">
+    <div class="slides">
+        <div class="slide" style="background-color: lightgray;"><img src="./imgs/다이슨(수정).jpg" width="500"></div>
+        <div class="slide" style="background-color: lightpink;"><img src="./imgs/초콜릿-포장지-디자인-1.jpg" width="500"></div>
+        <div class="slide" style="background-color: lightgreen;"><img src="./imgs/초콜릿-포장지-디자인-2.jpg" width="500"></div>
+        <div class="slide" style="background-color: lightgray;"><img src="./imgs/초콜릿-포장지-디자인-3.jpg" width="500"></div>
+        <div class="slide" style="background-color: lightpink;"><img src="./imgs/초콜릿-포장지-디자인-4.jpg" width="500"></div>
+        <div class="slide" style="background-color: lightgreen;"><img src="./imgs/커피 포스터2(0610)-목업.jpg" width="500"></div>
+    </div>
+    <div class="nav-buttons">
+        <button onclick="prevSlide()">&#10094;</button>
+        <button onclick="nextSlide()">&#10095;</button>
+    </div>
+</div>
+</div>
+
+<div id="section3" class="section" style="background-color: lightgreen;">
+<h2>스킬</h2>
+<p>여기에는 나의 기술에 대해 적습니다.</p>
+</div>
+
+<div id="section4" class="section" style="background-color: lightyellow;">
+<h2>연락처</h2>
+<p>여기에는 연락처 정보를 적습니다.</p>
+</div>
+
+<div class="btn-container">
+<button class="btn" onclick="scrollToTop()">↑</button>
+<button class="btn" onclick="scrollToBottom()">↓</button>
+</div>
+
+<script>
+
+function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToBottom() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        let slideIndex = 0;
+        const slides = document.querySelector('.slides');
+        const slideElements = document.querySelectorAll('.slide');
+        const totalSlides = slideElements.length;
+
+        function nextSlide() {
+            slides.style.transition = 'transform 0.5s ease';
+            slides.style.transform = `translateX(-100%)`;
+
+            slides.addEventListener('transitionend', function() {
+                slides.appendChild(slides.firstElementChild);
+                slides.style.transition = 'none';
+                slides.style.transform = 'translateX(0)';
+                setTimeout(() => {
+                    slides.style.transition = 'transform 0.5s ease';
+                }, 50);
+            }, { once: true });
+        }
+
+        function prevSlide() {
+            slides.style.transition = 'none';
+            slides.insertBefore(slides.lastElementChild, slides.firstElementChild);
+            slides.style.transform = 'translateX(-100%)';
+
+            setTimeout(() => {
+                slides.style.transition = 'transform 0.5s ease';
+                slides.style.transform = 'translateX(0)';
+            }, 50);
+        }
+
+        showSlide();
+</script>
+</body>
+</html>
